@@ -3,10 +3,150 @@
 <head>
 	<title>Javascript - sesion 4</title>
 </head>
+<style type="text/css">
+
+	input[type="text"]{
+	    font-size:24px;
+	}
+
+</style>
 <body>
-hola
+	<p>Practicas de JavaScript - ECMAScript 5</p>
+	<div id="container">
+		<h1>Adivina el n&uacute;mero</h1>
+		<br/><br/>
+		Tenemos que ingresar un n&uacute;mero del 1 al 10. Para adivinar en 3 intentos.
+		<br/><br/>
+		Ingresa un n&uacute;mero: <input type="text" id="idEntrada" class="claseInput" size="5" />
+		<input type="button" name="boton" value=" Enviar " onclick="ejecutarMiFuncion()">
+		
+		<br/><br/>
+
+		<div class="resultados">
+			<div id="numeros"></div>
+
+			Números que ud. ha intentado: <div id="lista_de_numeros"></div>	
+			<br/>
+			<div id="pistas"></div>		
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
-	
+	var sss = "es un String";
+
+	//si escribes en consola del browser: typeof sss
+	// te responderá "string"
+
+	let variableECMAScript6 = "hola mundo";
+	//si escribes en consola del browser: typeof sss
+	// ó typeof(variableECMAScript6)
+	// te responderá "string"
+
+	var varInteger = 10;
+	var varString = "hola";
+
+	function function_name(argument) {
+		alert("escrito en codigo");
+	}
+	/*
+		F12 - consola
+			function_name();
+			function_name = function(){ console.log("sobreescrito") }
+			function_name();
+	*/
+
+	var varBoolean = true;
+	var camelCaseArray = [1, 2, 3];
+
+	var varObjecto = { "clave" : "valor" };
+
+	if ( varInteger == 10 ){
+		console.log("es verdadero el valor");
+	}
+
+	/*
+	 * Ejercicio de adivinacion. 
+	 * Declaracion de elementos que necesitamos
+	 */
+	let NUMERO_A_ADIVINAR = Math.floor( (Math.random() * 10 ) + 1 );
+
+	let intentosRealizados = 0;
+	let LIMITE_DE_INTENTOS = 3;
+
+	function ejecutarMiFuncion(){
+
+		intentosRealizados++;
+
+		var x = document.getElementById("idEntrada").value;
+
+		var y = document.querySelector("#idEntrada").value;
+
+		var z = document.querySelector(".claseInput").value;
+		
+		//alert(x + y + z);
+		lista_de_numeros.textContent = lista_de_numeros.textContent + " - " + x;
+
+		var puedeSeguir = verificarNumeroIntentos();
+
+		if ( puedeSeguir ){
+			if ( z == NUMERO_A_ADIVINAR ){
+				gano();
+
+			} else {
+				fallo(z);
+			}
+		} else {
+			lista_de_numeros.textContent = "Ya perdió no insista";
+		}
+
+		//limpiar la variable
+		document.querySelector("#idEntrada").value = "";
+		document.querySelector("#idEntrada").focus();
+	}
+
+	function gano(){
+
+		console.log("Si adivinó", NUMERO_A_ADIVINAR);
+		lista_de_numeros.textContent = "Ud. ha ganado!!";
+	}
+
+	function fallo(numeroDeUsuario){
+
+		console.log("NO adivinó", NUMERO_A_ADIVINAR);
+
+		mostrarPista(numeroDeUsuario);
+
+		if ( intentosRealizados >= LIMITE_DE_INTENTOS ){
+			perdio();
+		}
+	}
+
+	function verificarNumeroIntentos(){
+
+		if ( intentosRealizados <= LIMITE_DE_INTENTOS ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function perdio(){
+		lista_de_numeros.textContent = "PERDIÓ";
+	}
+
+	function mostrarPista(numeroDeUsuario){
+
+		if ( Number(numeroDeUsuario) < NUMERO_A_ADIVINAR ){
+			console.log(numeroDeUsuario + " es menor");
+			pistas.textContent = "Intente con un número Mayor";
+			pistas.style.backgroundColor = "yellow";
+
+		} else if ( parseInt(numeroDeUsuario) > NUMERO_A_ADIVINAR ){
+			console.log(numeroDeUsuario, " es MAYOR");
+			pistas.textContent = "Intente con un número menor";
+			pistas.style.backgroundColor = "pink";
+		}
+	}
+
 </script>
 </html>
